@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -234,3 +235,241 @@
     </script>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trendify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div id="app" class="flex-grow">
+      <!-- App content will be dynamically loaded here -->
+    </div>
+
+    <script>
+      // Mock Data
+      const mockChallenges = [
+        {
+          id: 1,
+          title: "30 Second Dance Challenge",
+          creator: "TrendMaster",
+          points: 50,
+          difficulty: "Easy",
+          mediaUrl: "https://via.placeholder.com/300x200",
+        },
+        {
+          id: 2,
+          title: "DIY Room Decor Challenge",
+          creator: "CraftQueen",
+          points: 75,
+          difficulty: "Medium",
+          mediaUrl: "https://via.placeholder.com/300x200",
+        },
+      ];
+
+      const mockLeaderboard = [
+        {
+          username: "TrendMaster",
+          points: 1500,
+          avatar: "https://via.placeholder.com/50",
+        },
+        {
+          username: "ChallengeKing",
+          points: 1350,
+          avatar: "https://via.placeholder.com/50",
+        },
+        {
+          username: "CreativeCrafter",
+          points: 1200,
+          avatar: "https://via.placeholder.com/50",
+        },
+      ];
+
+      const mockTrends = [
+        {
+          id: 1,
+          title: "Dance Craze",
+          type: "Dance",
+          mediaUrl: "https://via.placeholder.com/300x200",
+        },
+        {
+          id: 2,
+          title: "DIY Room Hack",
+          type: "Craft",
+          mediaUrl: "https://via.placeholder.com/300x200",
+        },
+      ];
+
+      // App State
+      let currentTab = "home";
+
+      // Render Functions
+      function renderHeader() {
+        return `
+                <header class="bg-purple-600 text-white p-4 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">Trendify</h1>
+                    <div class="flex space-x-4">
+                        <button class="bg-purple-500 p-2 rounded">+</button>
+                        <button class="bg-purple-500 p-2 rounded">👥</button>
+                    </div>
+                </header>
+            `;
+      }
+
+      function renderChallengeFeed() {
+        return `
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold">Daily Challenges</h2>
+                    ${mockChallenges
+                      .map(
+                        (challenge) => `
+                        <div class="bg-white rounded-lg shadow-md p-4 flex items-center space-x-4">
+                            <img 
+                                src="${challenge.mediaUrl}" 
+                                alt="${challenge.title}" 
+                                class="w-24 h-24 object-cover rounded"
+                            />
+                            <div class="flex-grow">
+                                <h3 class="font-semibold">${challenge.title}</h3>
+                                <p class="text-sm text-gray-500">By ${challenge.creator}</p>
+                                <div class="flex justify-between mt-2">
+                                    <span class="text-sm bg-green-100 text-green-600 px-2 rounded">
+                                        ${challenge.difficulty}
+                                    </span>
+                                    <span class="text-sm font-bold text-purple-600">
+                                        ${challenge.points} pts
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded">
+                                Join
+                            </button>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>
+            `;
+      }
+
+      function renderLeaderboard() {
+        return `
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h2 class="text-xl font-bold mb-4">Leaderboard</h2>
+                    ${mockLeaderboard
+                      .map(
+                        (user, index) => `
+                        <div class="flex items-center justify-between p-2 border-b">
+                            <div class="flex items-center space-x-4">
+                                <span class="font-bold">${index + 1}</span>
+                                <img 
+                                    src="${user.avatar}" 
+                                    alt="${user.username}" 
+                                    class="w-10 h-10 rounded-full"
+                                />
+                                <span>${user.username}</span>
+                            </div>
+                            <span class="font-bold text-purple-600">${
+                              user.points
+                            } pts</span>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>
+            `;
+      }
+
+      function renderContentExplorer() {
+        return `
+                <div>
+                    <h2 class="text-xl font-bold mb-4">Trending Content</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${mockTrends
+                          .map(
+                            (trend) => `
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                                <img 
+                                    src="${trend.mediaUrl}" 
+                                    alt="${trend.title}" 
+                                    class="w-full h-40 object-cover"
+                                />
+                                <div class="p-2">
+                                    <h3 class="font-semibold">${trend.title}</h3>
+                                    <span class="text-sm text-gray-500">${trend.type}</span>
+                                    <button class="w-full bg-purple-600 text-white mt-2 py-1 rounded">
+                                        Try It
+                                    </button>
+                                </div>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                </div>
+            `;
+      }
+
+      function renderBottomNav() {
+        return `
+                <nav class="bg-white border-t flex justify-around p-4">
+                    <button onclick="switchTab('home')" class="flex flex-col items-center ${
+                      currentTab === "home"
+                        ? "text-purple-600"
+                        : "text-gray-500"
+                    }">
+                        <span class="text-2xl">🏠</span>
+                        <span class="text-xs">Home</span>
+                    </button>
+                    <button onclick="switchTab('leaderboard')" class="flex flex-col items-center ${
+                      currentTab === "leaderboard"
+                        ? "text-purple-600"
+                        : "text-gray-500"
+                    }">
+                        <span class="text-2xl">🏆</span>
+                        <span class="text-xs">Leaderboard</span>
+                    </button>
+                    <button onclick="switchTab('explore')" class="flex flex-col items-center ${
+                      currentTab === "explore"
+                        ? "text-purple-600"
+                        : "text-gray-500"
+                    }">
+                        <span class="text-2xl">🔍</span>
+                        <span class="text-xs">Explore</span>
+                    </button>
+                </nav>
+            `;
+      }
+
+      function renderApp() {
+        const appContainer = document.getElementById("app");
+        appContainer.innerHTML = `
+                ${renderHeader()}
+                <main class="flex-grow p-4">
+                    ${
+                      currentTab === "home"
+                        ? renderChallengeFeed()
+                        : currentTab === "leaderboard"
+                        ? renderLeaderboard()
+                        : renderContentExplorer()
+                    }
+                </main>
+                ${renderBottomNav()}
+            `;
+      }
+
+      // Tab Switching Function
+      function switchTab(tab) {
+        currentTab = tab;
+        renderApp();
+      }
+
+      // Initial Render
+      renderApp();
+    </script>
+  </body>
+</html>
+>>>>>>> d5639b2b66b1bf4c5a2f26abff0311362ded0738
